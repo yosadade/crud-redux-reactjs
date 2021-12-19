@@ -6,6 +6,13 @@
       "address": "Ankara",
       "email": "calho77@mail.com",
       "contact": "0839438"
+    },
+    {
+      "name": "Romagnoli",
+      "email": "romagno@mail.com",
+      "contact": "83848",
+      "address": "Milano",
+      "id": 4
     }
   ]
 }

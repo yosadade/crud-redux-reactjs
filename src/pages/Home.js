@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserAction, loadUsers } from "../redux/action";
 import { Button, ButtonGroup } from "@mui/material";
+import { useHistory } from "react-router";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,6 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Home = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.data);
 
@@ -48,6 +51,11 @@ const Home = () => {
 
   return (
     <TableContainer component={Paper}>
+      <div>
+        <Button variant="contained" color="primary" onClick={() => history.push("/adduser")}>
+          Add
+        </Button>
+      </div>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>

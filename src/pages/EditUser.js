@@ -1,32 +1,43 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Box, TextField, Button } from "@mui/material";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import useForm from "../utils/useForm";
-import {useDispatch} from 'react-redux'
-import { AddUserAction } from "../redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserAction, getSingleUserAction } from "../redux/action";
 
-const AddUser = () => {
+const EditUser = () => {
   const [form, setForm] = useForm({
     name: "",
     email: "",
     contact: "",
     address: "",
   });
-  const [error, setError] = useState()
+  const [error, setError] = useState();
 
   const history = useHistory();
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.data);
 
   const { name, email, contact, address } = form;
 
+  // useEffect(() => {
+  //     dispatch(getSingleUserAction(id));
+  // }, [dispatch, form, id]);
+
+  // useEffect(() => {
+  //   if(user) {
+  //     setForm({...user})
+  //   }
+  // }, [setForm, user])
+
   const handleSubmit = () => {
-      if(!name || !email || !contact || !address) {
-        setError("please input all field")
-      } else {
-          dispatch(AddUserAction(form))
-          history.push("/")
-          setError("")
-      }
+    if (!name || !email || !contact || !address) {
+      setError("please input all field");
+    } else {
+      dispatch(updateUserAction(form, id));
+      setError("");
+    }
   };
 
   return (
@@ -39,8 +50,8 @@ const AddUser = () => {
       >
         Go Back
       </Button>
-      <h3>Add User</h3>
-      {error && <h3 style={{color: 'red'}}>{error}</h3>}
+      <h3>Edit User {user.name}</h3>
+      {error && <h3 style={{ color: "red" }}>{error}</h3>}
       <Box
         component="form"
         sx={{
@@ -88,10 +99,10 @@ const AddUser = () => {
         style={{ width: "100px", marginTop: "20px" }}
         onClick={handleSubmit}
       >
-        Submit
+        Update
       </Button>
     </div>
   );
 };
 
-export default AddUser;
+export default EditUser;
